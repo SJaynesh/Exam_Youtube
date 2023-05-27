@@ -21,7 +21,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     Future.delayed(Duration.zero, () {
       Provider.of<YoutubeVideo_Provider>(context, listen: false)
-          .searchVideo("Hello");
+          .searchVideo("trailer");
     });
   }
 
@@ -70,7 +70,7 @@ class _HomePageState extends State<HomePage> {
                             width: w,
                             child: Padding(
                               padding: const EdgeInsets.only(
-                                  top: 25, left: 16, right: 16, bottom: 16),
+                                  top: 25, left: 16, right: 16, bottom: 30),
                               child: ListView.builder(
                                 controller: scrollController,
                                 itemCount:
