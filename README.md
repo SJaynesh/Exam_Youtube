@@ -72,12 +72,11 @@ Using Shared Preferences, the data that the user searches for is displayed as a 
  
   <img  src = "https://github.com/SJaynesh/Exam_Youtube/assets/115562979/3890c891-fc75-490d-985d-568af13bdf20.png" width=22% height=35% >
 </P>
-  
-  
+
   <p>
-  <img align = "left"  src = "https://github.com/SJaynesh/Exam_Youtube/assets/115562979/3d3a4994-aab7-4169-8a43-6cbdb82151c1.png" width=22% height=35% >
+  <img align = "left"  src = "https://github.com/SJaynesh/Exam_Youtube/assets/115562979/b67bf127-12d2-42c4-890c-01a00875bb6e.png" width=22% height=35% >
   
-  <img align = "left"  src = "https://github.com/SJaynesh/Exam_Youtube/assets/115562979/94126f5e-9c5d-4a50-bd64-18edf8fdd19e.png" width=22% height=35% >
+  <img align = "left"  src = "https://github.com/SJaynesh/Exam_Youtube/assets/115562979/30220842-95d2-41b2-aafe-fc7d63d69c67.png" width=22% height=35% >
  
   <img align = "left"  src = "https://github.com/SJaynesh/Exam_Youtube/assets/115562979/5d8d7041-2784-4db3-a896-8ca06f625887.png" width=22% height=35% >
  
