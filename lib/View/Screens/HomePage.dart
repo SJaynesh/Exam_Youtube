@@ -1,3 +1,4 @@
+import 'package:code/Controller/History_Provider.dart';
 import 'package:code/Controller/YoutubeVideo_Provider.dart';
 import 'package:code/Model/Youtube_model.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  TextEditingController searchController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -47,7 +50,57 @@ class _HomePageState extends State<HomePage> {
           centerTitle: true,
           actions: [
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  backgroundColor: Colors.lightBlueAccent.withOpacity(0.4),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(60),
+                    ),
+                  ),
+                  builder: (context) => DraggableScrollableSheet(
+                      expand: false,
+                      initialChildSize: 0.4,
+                      maxChildSize: 0.9,
+                      minChildSize: 0.32,
+                      builder: (context, scrollController) => Container(
+                            height: h,
+                            width: w,
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 25, left: 16, right: 16, bottom: 16),
+                              child: ListView.builder(
+                                controller: scrollController,
+                                itemCount:
+                                    Provider.of<History_Proivider>(context)
+                                        .h1
+                                        .History
+                                        .length,
+                                itemBuilder: (context, i) => ListTile(
+                                  title: Text(
+                                    Provider.of<History_Proivider>(context)
+                                        .h1
+                                        .History[i],
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  trailing: IconButton(
+                                      onPressed: () {
+                                        Provider.of<History_Proivider>(context,
+                                                listen: false)
+                                            .deleteHistory(i);
+                                      },
+                                      icon: Icon(Icons.delete,color: Colors.limeAccent,)),
+                                ),
+                              ),
+                            ),
+                          )),
+                );
+              },
               icon: Icon(
                 Icons.history,
                 color: Colors.grey,
@@ -59,13 +112,16 @@ class _HomePageState extends State<HomePage> {
           elevation: 0,
         ),
         body: Container(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              children: [
-                TextField(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: TextField(
+                  controller: searchController,
                   onSubmitted: (val) {
-                    Provider.of<YoutubeVideo_Provider>(context,listen: false).searchVideo(val);
+                    Provider.of<YoutubeVideo_Provider>(context, listen: false)
+                        .searchVideo(val);
+                    searchController.clear();
                   },
                   decoration: InputDecoration(
                     hintText: "Search",
@@ -77,71 +133,86 @@ class _HomePageState extends State<HomePage> {
                         width: 2,
                       ),
                     ),
-                    disabledBorder: OutlineInputBorder(
+                    focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),
                       borderSide: BorderSide(
-                        color: Colors.redAccent,
+                        color: Colors.greenAccent,
                         width: 3,
                       ),
                     ),
                   ),
                 ),
-                // Expanded(
-                //   child: ListView.builder(
-                //     itemBuilder: (context, index) => Container(),
-                //   ),
-                // ),
-                SizedBox(
-                  height: h * 0.02,
-                ),
-                Expanded(
-                  child: FutureBuilder(
-                      future: Provider.of<YoutubeVideo_Provider>(context)
-                          .y1
-                          .getVideo,
-                      builder: (context, snapShot) {
-                        if (snapShot.hasError) {
-                          return Center(
-                            child: Text("ERROR : ${snapShot.error}"),
-                          );
-                        } else if (snapShot.hasData) {
-                          Youtube? data = snapShot.data;
+              ),
+              SizedBox(
+                height: h * 0.02,
+              ),
+              Expanded(
+                child: FutureBuilder(
+                    future:
+                        Provider.of<YoutubeVideo_Provider>(context).y1.getVideo,
+                    builder: (context, snapShot) {
+                      if (snapShot.hasError) {
+                        return Center(
+                          child: Text("ERROR : ${snapShot.error}"),
+                        );
+                      } else if (snapShot.hasData) {
+                        Youtube? data = snapShot.data;
 
-                          return Container(
-                            height: h,
-                            width: w,
-                            child: ListView.builder(
-                              itemCount: data!.items.length,
-                              itemBuilder: (context, i) => GestureDetector(
-                                onTap: () {
-                                  Provider.of<VideoPlayer_Provider>(context,
-                                      listen: false)
-                                      .AddVideo(data.items[i]['id']['videoId']);
-                                  Navigator.of(context).pushNamed("VideoPlayerPage",arguments: data.items[i]);
-                                },
-                                child: Container(
-                                  height: h * 0.25,
-                                  width: double.infinity,
-                                  margin: EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                      color: Colors.red,
-                                      borderRadius: BorderRadius.circular(20),
+                        return Container(
+                          height: h,
+                          width: w,
+                          child: ListView.builder(
+                            itemCount: data!.items.length,
+                            itemBuilder: (context, i) => Column(
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    Provider.of<VideoPlayer_Provider>(context,
+                                            listen: false)
+                                        .AddVideo(
+                                            data.items[i]['id']['videoId']);
+                                    Provider.of<History_Proivider>(context,
+                                            listen: false)
+                                        .addValueHistory(
+                                            data.items[i]['snippet']['title']);
+                                    Navigator.of(context).pushNamed(
+                                        "VideoPlayerPage",
+                                        arguments: data.items[i]);
+                                  },
+                                  child: Container(
+                                    height: h * 0.35,
+                                    width: w,
+                                    decoration: BoxDecoration(
                                       image: DecorationImage(
                                         image: NetworkImage(data.items[i]
-                                                ['snippet']['thumbnails']['high']
-                                            ['url']),
-                                        fit: BoxFit.cover,
-                                      )),
+                                                ['snippet']['thumbnails']
+                                            ['high']['url']),
+                                        fit: BoxFit.fill,
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                ListTile(
+                                  title: Text(
+                                    data.items[i]['snippet']['channelTitle'],
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  subtitle: Text(data.items[i]['snippet']
+                                          ['publishTime']
+                                      .toString()
+                                      .split("T")[0]),
+                                ),
+                              ],
                             ),
-                          );
-                        }
-                        return Center(child: CircularProgressIndicator());
-                      }),
-                )
-              ],
-            ),
+                          ),
+                        );
+                      }
+                      return Center(child: CircularProgressIndicator());
+                    }),
+              )
+            ],
           ),
         ),
       ),

@@ -1,11 +1,7 @@
-import 'package:video_player/video_player.dart';
-import 'package:chewie/chewie.dart';
-
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class VideoPlayer_model {
+  YoutubePlayerController? youtubePlayerController;
 
-  VideoPlayerController? videoPlayerController;
-  ChewieController? chewieController;
-
-  VideoPlayer_model({this.videoPlayerController, this.chewieController});
+  VideoPlayer_model({this.youtubePlayerController});
 }

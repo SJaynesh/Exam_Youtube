@@ -10,7 +10,7 @@ class APIHelper {
 
   Future<Youtube?>fetchData(String search) async {
     String API =
-        "https://www.googleapis.com/youtube/v3/search?key=AIzaSyBgm8BAE4mK8ZWh8qkwJpBXFcEOdWO_eCk&q=$search&type=video&part=snippet";
+        "https://www.googleapis.com/youtube/v3/search?key=AIzaSyAs1aFi4ZH8uhJn20cfM4HuDZu28oySAa8&q=$search&type=video&part=snippet";
 
     http.Response res = await http.get(Uri.parse(API));
 
