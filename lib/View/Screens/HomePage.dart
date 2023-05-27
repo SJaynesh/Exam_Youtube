@@ -65,40 +65,59 @@ class _HomePageState extends State<HomePage> {
                       initialChildSize: 0.4,
                       maxChildSize: 0.9,
                       minChildSize: 0.32,
-                      builder: (context, scrollController) => Container(
-                            height: h,
-                            width: w,
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 25, left: 16, right: 16, bottom: 30),
-                              child: ListView.builder(
-                                controller: scrollController,
-                                itemCount:
-                                    Provider.of<History_Proivider>(context)
-                                        .h1
-                                        .History
-                                        .length,
-                                itemBuilder: (context, i) => ListTile(
-                                  title: Text(
-                                    Provider.of<History_Proivider>(context)
-                                        .h1
-                                        .History[i],
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
+                      builder: (context, scrollController) => SingleChildScrollView(
+                        controller: scrollController,
+                        child: Column(
+                              children: [
+                                Text(
+                                  "History",
+                                  style: TextStyle(
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                                Container(
+                                  height: h,
+                                  width: w,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 25, left: 16, right: 16, bottom: 30),
+                                    child: ListView.builder(
+                                      controller: scrollController,
+                                      itemCount:
+                                          Provider.of<History_Proivider>(context)
+                                              .h1
+                                              .History
+                                              .length,
+                                      itemBuilder: (context, i) => ListTile(
+                                        title: Text(
+                                          Provider.of<History_Proivider>(context)
+                                              .h1
+                                              .History[i],
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        trailing: IconButton(
+                                            onPressed: () {
+                                              Provider.of<History_Proivider>(
+                                                      context,
+                                                      listen: false)
+                                                  .deleteHistory(i);
+                                            },
+                                            icon: Icon(
+                                              Icons.delete,
+                                              color: Colors.limeAccent,
+                                            )),
+                                      ),
                                     ),
                                   ),
-                                  trailing: IconButton(
-                                      onPressed: () {
-                                        Provider.of<History_Proivider>(context,
-                                                listen: false)
-                                            .deleteHistory(i);
-                                      },
-                                      icon: Icon(Icons.delete,color: Colors.limeAccent,)),
                                 ),
-                              ),
+                              ],
                             ),
-                          )),
+                      )),
                 );
               },
               icon: Icon(

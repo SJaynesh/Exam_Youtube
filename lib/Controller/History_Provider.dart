@@ -16,9 +16,10 @@ class History_Proivider extends ChangeNotifier {
     notifyListeners();
   }
 
-  deleteHistory(i) {
+  deleteHistory(i) async{
     h1.History.removeAt(i);
-
+    SharedPreferences Pref = await SharedPreferences.getInstance();
+    Pref.setStringList("History", h1.History);
     notifyListeners();
   }
 }
