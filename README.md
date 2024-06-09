@@ -8,7 +8,7 @@ YouTube
 Create a YouTube clone application using YouTube API. Users can search any video and list the top 5 videos as per searched results. Users also play any video from searched results. The application must have a log history of searched videos using a shared preferences mechanism. Users can see all his/her past searched video names by pressing a button from AppBar.
 
 ## Project Objectives :
-
+ 
 ### API Calling:
 The app utilizes API calls to fetch Youtube data from reliable Youtube data providers. This ensures that users receive accurate and up-to-date Youtube information for their desired locations.
 
